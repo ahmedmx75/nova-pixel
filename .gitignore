@@ -23,6 +23,13 @@ test-ledger/
 apt-test.log
 deploy.log
 
+# Local comparison artifacts
+on-chain-*.so
+
+# Cargo internal files in patches
+patches/**/.cargo-ok
+patches/**/Cargo.lock
+
 # Environment files
 .env
 .env.*
