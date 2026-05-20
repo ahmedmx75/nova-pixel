@@ -1,0 +1,60 @@
+name: Verify Program On-Chain
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'programs/**'
+      - 'Cargo.toml'
+      - 'Cargo.lock'
+  workflow_dispatch:
+    inputs:
+      program_id:
+        description: 'Program ID to verify'
+        required: true
+        default: 'DRD8K7Ywmpy4JqNE473uBTs6jaf5ajrQ32FxoxzbRoGf'
+      cluster:
+        description: 'Cluster (devnet/mainnet-beta)'
+        required: true
+        default: 'devnet'
+
+jobs:
+  verify:
+    name: Verify NVPX Program
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Cache Cargo registry
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
+      - name: Install solana-verify
+        run: cargo install solana-verify
+
+      - name: Verify program
+        run: |
+          PROGRAM_ID="${{ github.event.inputs.program_id || 'DRD8K7Ywmpy4JqNE473uBTs6jaf5ajrQ32FxoxzbRoGf' }}"
+          CLUSTER="${{ github.event.inputs.cluster || 'devnet' }}"
+          echo "Verifying program: $PROGRAM_ID on $CLUSTER"
+          solana-verify verify-from-repo \
+            --url $CLUSTER \
+            --program-id $PROGRAM_ID \
+            https://github.com/ahmedmx75/nova-pixel \
+            --library-name nova_pixel \
+            --mount-path programs/nova-pixel
+
+      - name: Print verification result
+        if: success()
+        run: echo "✅ Program verified successfully on ${{ github.event.inputs.cluster || 'devnet' }}"
