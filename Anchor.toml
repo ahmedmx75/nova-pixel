@@ -1,0 +1,19 @@
+[features]
+seeds = true
+skip-lint = false
+
+[programs.localnet]
+nova_pixel = "DRD8K7Ywmpy4JqNE473uBTs6jaf5ajrQ32FxoxzbRoGf"
+
+[programs.devnet]
+nova_pixel = "DRD8K7Ywmpy4JqNE473uBTs6jaf5ajrQ32FxoxzbRoGf"
+
+[registry]
+url = "https://api.apr.dev"
+
+[provider]
+cluster = "devnet"
+wallet = "C:/Users/bibob/.config/solana/id.json"
+
+[scripts]
+test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

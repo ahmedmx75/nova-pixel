@@ -1,0 +1,6 @@
+[toolchain]
+# Using stable — cargo-build-sbf uses its own internal SBF toolchain for compilation;
+# this file only controls the host cargo used for metadata resolution.
+# Stable (1.95+) is required because transitive deps (blake3 ≥1.8, wit-bindgen ≥0.57)
+# declare `edition = "2024"` which only stabilized in Rust/Cargo 1.85.
+channel = "stable"

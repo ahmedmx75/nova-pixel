@@ -1,0 +1,56 @@
+# Rust build artifacts
+target/
+
+# Anchor IDL and type files (generated)
+.anchor/
+
+# Node.js
+node_modules/
+dist/
+
+# Sensitive — never commit keypairs
+**/*-keypair.json
+id.json
+*.key
+*.pem
+*.secret
+
+# Solana test ledger
+test-ledger/
+
+# Logs
+*.log
+apt-test.log
+deploy.log
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temporary shell scripts used during setup (not part of the program)
+deploy.sh
+deploy-devnet.sh
+install-wsl2.ps1
+solana-cargo-wrapper.sh
+setup-and-deploy.sh
+launch-deploy.sh
+apt-test.sh
+install-steps.sh
+install-solana-anchor.sh
+fix-solana-anchor.sh
+install-solana.sh
+get-solana.sh
+setup-toolchain.sh
+fix-sdk.sh
+install-toolchain-and-spoof.sh
+rustc-spoof.sh
+deploy-after-restart.sh
