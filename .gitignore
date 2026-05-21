@@ -26,6 +26,9 @@ deploy.log
 # Local comparison artifacts
 on-chain-*.so
 
+# Local build logs
+anchor-build*.log
+
 # Cargo internal files in patches
 patches/**/.cargo-ok
 patches/**/Cargo.lock
