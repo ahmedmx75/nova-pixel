@@ -1,0 +1,2908 @@
+{
+  "address": "DRD8K7Ywmpy4JqNE473uBTs6jaf5ajrQ32FxoxzbRoGf",
+  "metadata": {
+    "name": "nova_pixel",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Nova Pixel — Blockchain Pixel War Game"
+  },
+  "instructions": [
+    {
+      "name": "admin_buyback",
+      "docs": [
+        "ADMIN: use buyback SOL to buy NVPX from Jupiter DEX."
+      ],
+      "discriminator": [
+        174,
+        118,
+        124,
+        71,
+        5,
+        101,
+        185,
+        123
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyback_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "destination_token_account",
+          "docs": [
+            "Destination for bought-back NVPX (reserve or liquidity wallet ATA)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "jupiter_program"
+        }
+      ],
+      "args": [
+        {
+          "name": "sol_amount",
+          "type": "u64"
+        },
+        {
+          "name": "jupiter_data",
+          "type": "bytes"
+        }
+      ]
+    },
+    {
+      "name": "burn_tokens",
+      "docs": [
+        "ADMIN: one-time burn of the 150,000,000 NVPX burn allocation (Phase 04)."
+      ],
+      "discriminator": [
+        76,
+        15,
+        51,
+        254,
+        229,
+        215,
+        121,
+        66
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "burn_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  114,
+                  110,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "burn_token_account",
+          "writable": true
+        },
+        {
+          "name": "nvpx_mint",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "buy_item",
+      "docs": [
+        "Buy a Shield 3×3, Shield 5×5, or Rocket.  SOL goes to buyback_wallet."
+      ],
+      "discriminator": [
+        80,
+        82,
+        193,
+        201,
+        216,
+        27,
+        70,
+        184
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyback_wallet_state",
+          "docs": [
+            "Buyback wallet PDA — receives the SOL."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "item_type",
+          "type": "u8"
+        },
+        {
+          "name": "target_x",
+          "type": "u16"
+        },
+        {
+          "name": "target_y",
+          "type": "u16"
+        },
+        {
+          "name": "defender",
+          "type": {
+            "option": "pubkey"
+          }
+        }
+      ]
+    },
+    {
+      "name": "buy_package",
+      "docs": [
+        "Buy Starter / Advanced / Pro package — routes SOL through Jupiter → NVPX.",
+        "Pass Jupiter swap data and all required accounts as remaining_accounts."
+      ],
+      "discriminator": [
+        231,
+        83,
+        102,
+        184,
+        109,
+        103,
+        117,
+        2
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "sol_vault",
+          "docs": [
+            "SOL vault PDA — receives SOL from player then signs the Jupiter CPI."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  111,
+                  108,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_wallet_state",
+          "docs": [
+            "Airdrop wallet state — tracks in-pool NVPX balance."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_token_account",
+          "docs": [
+            "NVPX token account owned by airdrop_wallet_state PDA.",
+            "Jupiter deposits purchased NVPX here."
+          ],
+          "writable": true
+        },
+        {
+          "name": "jupiter_program"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "package_type",
+          "type": "u8"
+        },
+        {
+          "name": "jupiter_data",
+          "type": "bytes"
+        },
+        {
+          "name": "sol_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "capture_pixel",
+      "docs": [
+        "Record a pixel capture: attacker takes the 2× reward from defender."
+      ],
+      "discriminator": [
+        20,
+        20,
+        189,
+        142,
+        80,
+        115,
+        177,
+        44
+      ],
+      "accounts": [
+        {
+          "name": "game_server",
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "attacker_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "attacker_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "defender_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "defender_wallet"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "attacker_wallet",
+          "type": "pubkey"
+        },
+        {
+          "name": "defender_wallet",
+          "type": "pubkey"
+        },
+        {
+          "name": "x",
+          "type": "u16"
+        },
+        {
+          "name": "y",
+          "type": "u16"
+        },
+        {
+          "name": "nvpx_reward",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "claim_airdrop",
+      "docs": [
+        "Claim proportional airdrop share after the tournament ends."
+      ],
+      "discriminator": [
+        137,
+        50,
+        122,
+        111,
+        89,
+        254,
+        8,
+        20
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_token_account",
+          "docs": [
+            "Airdrop pool token account (source of airdrop tokens)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "player_nvpx_account",
+          "docs": [
+            "Player's NVPX token account (destination)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "color_pixel",
+      "docs": [
+        "Record a pixel coloring event and pay the 2× reward from the airdrop pool."
+      ],
+      "discriminator": [
+        70,
+        171,
+        13,
+        8,
+        141,
+        208,
+        127,
+        196
+      ],
+      "accounts": [
+        {
+          "name": "game_server",
+          "docs": [
+            "Game server — trusted oracle that reports canvas events on-chain."
+          ],
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "player_wallet"
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_wallet_state",
+          "docs": [
+            "Airdrop wallet state — the source of 2× reward funds."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_token_account",
+          "docs": [
+            "NVPX token account owned by airdrop_wallet_state (source of transfer)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "player_nvpx_account",
+          "docs": [
+            "Player's NVPX token account (destination of reward transfer)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "player_wallet",
+          "type": "pubkey"
+        },
+        {
+          "name": "x",
+          "type": "u16"
+        },
+        {
+          "name": "y",
+          "type": "u16"
+        },
+        {
+          "name": "pixel_value",
+          "type": "u64"
+        },
+        {
+          "name": "is_correct",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "connect_player",
+      "docs": [
+        "Register a wallet and join a team (0 / 1 / 2)."
+      ],
+      "discriminator": [
+        71,
+        25,
+        9,
+        230,
+        32,
+        41,
+        2,
+        2
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "team",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "emergency_pause",
+      "docs": [
+        "MULTISIG: cast a pause vote (2-of-3 required to pause)."
+      ],
+      "discriminator": [
+        21,
+        143,
+        27,
+        142,
+        200,
+        181,
+        210,
+        255
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "Must be one of the three registered multisig signers."
+          ],
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "reason",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "emergency_unpause",
+      "docs": [
+        "ADMIN: unpause after security issue is resolved."
+      ],
+      "discriminator": [
+        83,
+        249,
+        195,
+        57,
+        206,
+        189,
+        31,
+        85
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "end_tournament",
+      "docs": [
+        "ADMIN: close the tournament and begin airdrop distribution phase."
+      ],
+      "discriminator": [
+        99,
+        158,
+        174,
+        193,
+        250,
+        135,
+        4,
+        156
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize",
+      "docs": [
+        "Deploy all PDAs and wallet states.  Called once by admin."
+      ],
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "nvpx_mint"
+        },
+        {
+          "name": "liquidity_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "team_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  116,
+                  101,
+                  97,
+                  109,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "development_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  118,
+                  101,
+                  108,
+                  111,
+                  112,
+                  109,
+                  101,
+                  110,
+                  116,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "burn_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  114,
+                  110,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "reserve_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  115,
+                  101,
+                  114,
+                  118,
+                  101,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyback_wallet_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  98,
+                  117,
+                  121,
+                  98,
+                  97,
+                  99,
+                  107,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "InitializeParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "revoke_authorities",
+      "docs": [
+        "ADMIN: permanently revoke mint + freeze authority — token becomes fully immutable.",
+        "Call once after full supply is minted. IRREVERSIBLE."
+      ],
+      "discriminator": [
+        228,
+        135,
+        11,
+        88,
+        103,
+        125,
+        144,
+        223
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "Must be the current mint authority AND freeze authority."
+          ],
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "nvpx_mint",
+          "docs": [
+            "The NVPX mint — admin must be the current mint authority."
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "rocket_resolve",
+      "docs": [
+        "Game server removes a defender's shield after a Rocket purchase resolves."
+      ],
+      "discriminator": [
+        199,
+        8,
+        240,
+        155,
+        31,
+        63,
+        191,
+        213
+      ],
+      "accounts": [
+        {
+          "name": "game_server",
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "defender_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "defender_wallet"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "defender_wallet",
+          "type": "pubkey"
+        },
+        {
+          "name": "target_x",
+          "type": "u16"
+        },
+        {
+          "name": "target_y",
+          "type": "u16"
+        }
+      ]
+    },
+    {
+      "name": "sell_ingame",
+      "docs": [
+        "Sell in-game NVPX during an active tournament.  50% penalty + 2% tax applied."
+      ],
+      "discriminator": [
+        167,
+        32,
+        51,
+        123,
+        78,
+        150,
+        162,
+        248
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "player_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "airdrop_wallet_state",
+          "docs": [
+            "Airdrop wallet state — receives the 50% penalty."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  105,
+                  114,
+                  100,
+                  114,
+                  111,
+                  112,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "development_wallet_state",
+          "docs": [
+            "Development wallet state — receives the 2% tax."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  100,
+                  101,
+                  118,
+                  101,
+                  108,
+                  111,
+                  112,
+                  109,
+                  101,
+                  110,
+                  116,
+                  95,
+                  119,
+                  97,
+                  108,
+                  108,
+                  101,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_nvpx_account",
+          "docs": [
+            "Player's NVPX token account (source — their in-game holdings)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "airdrop_token_account",
+          "docs": [
+            "Airdrop pool token account (destination for penalty)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "development_token_account",
+          "docs": [
+            "Development wallet token account (destination for tax)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "start_tournament",
+      "docs": [
+        "ADMIN: open the tournament."
+      ],
+      "discriminator": [
+        164,
+        168,
+        208,
+        157,
+        43,
+        10,
+        220,
+        241
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "withdraw_locked",
+      "docs": [
+        "ADMIN: withdraw from a time-unlocked development or reserve wallet."
+      ],
+      "discriminator": [
+        96,
+        224,
+        88,
+        102,
+        223,
+        189,
+        8,
+        228
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true
+        },
+        {
+          "name": "global_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  103,
+                  108,
+                  111,
+                  98,
+                  97,
+                  108,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "wallet_state",
+          "writable": true
+        },
+        {
+          "name": "source_token_account",
+          "writable": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "GlobalState",
+      "discriminator": [
+        163,
+        46,
+        74,
+        168,
+        216,
+        123,
+        133,
+        98
+      ]
+    },
+    {
+      "name": "PlayerAccount",
+      "discriminator": [
+        224,
+        184,
+        224,
+        50,
+        98,
+        72,
+        48,
+        236
+      ]
+    },
+    {
+      "name": "WalletState",
+      "discriminator": [
+        126,
+        186,
+        0,
+        158,
+        92,
+        223,
+        167,
+        68
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "AirdropClaimed",
+      "discriminator": [
+        125,
+        251,
+        195,
+        183,
+        202,
+        126,
+        89,
+        68
+      ]
+    },
+    {
+      "name": "BuybackExecuted",
+      "discriminator": [
+        150,
+        109,
+        157,
+        10,
+        124,
+        24,
+        38,
+        189
+      ]
+    },
+    {
+      "name": "EmergencyPaused",
+      "discriminator": [
+        97,
+        135,
+        220,
+        149,
+        143,
+        72,
+        9,
+        27
+      ]
+    },
+    {
+      "name": "EmergencyUnpaused",
+      "discriminator": [
+        94,
+        218,
+        55,
+        35,
+        64,
+        239,
+        172,
+        36
+      ]
+    },
+    {
+      "name": "InGameSell",
+      "discriminator": [
+        83,
+        223,
+        220,
+        160,
+        98,
+        139,
+        149,
+        213
+      ]
+    },
+    {
+      "name": "ItemPurchased",
+      "discriminator": [
+        33,
+        219,
+        12,
+        58,
+        205,
+        48,
+        63,
+        143
+      ]
+    },
+    {
+      "name": "MintAuthorityRevoked",
+      "discriminator": [
+        2,
+        222,
+        125,
+        58,
+        108,
+        126,
+        254,
+        121
+      ]
+    },
+    {
+      "name": "PackagePurchased",
+      "discriminator": [
+        157,
+        199,
+        235,
+        75,
+        246,
+        165,
+        168,
+        203
+      ]
+    },
+    {
+      "name": "PixelCaptured",
+      "discriminator": [
+        184,
+        65,
+        15,
+        231,
+        17,
+        222,
+        216,
+        43
+      ]
+    },
+    {
+      "name": "PixelColored",
+      "discriminator": [
+        252,
+        241,
+        92,
+        70,
+        59,
+        101,
+        241,
+        0
+      ]
+    },
+    {
+      "name": "PlayerConnected",
+      "discriminator": [
+        44,
+        170,
+        132,
+        192,
+        118,
+        48,
+        157,
+        86
+      ]
+    },
+    {
+      "name": "RocketFired",
+      "discriminator": [
+        250,
+        177,
+        207,
+        59,
+        217,
+        88,
+        63,
+        210
+      ]
+    },
+    {
+      "name": "RoundEnded",
+      "discriminator": [
+        70,
+        113,
+        6,
+        162,
+        176,
+        78,
+        201,
+        19
+      ]
+    },
+    {
+      "name": "ShieldActivated",
+      "discriminator": [
+        155,
+        28,
+        228,
+        125,
+        168,
+        131,
+        255,
+        126
+      ]
+    },
+    {
+      "name": "TokensBurned",
+      "discriminator": [
+        230,
+        255,
+        34,
+        113,
+        226,
+        53,
+        227,
+        9
+      ]
+    },
+    {
+      "name": "TournamentEnded",
+      "discriminator": [
+        46,
+        250,
+        165,
+        48,
+        249,
+        96,
+        51,
+        134
+      ]
+    },
+    {
+      "name": "TournamentStarted",
+      "discriminator": [
+        200,
+        157,
+        174,
+        194,
+        174,
+        219,
+        107,
+        44
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "TournamentNotActive",
+      "msg": "Tournament is not active"
+    },
+    {
+      "code": 6001,
+      "name": "TournamentAlreadyActive",
+      "msg": "Tournament is already active"
+    },
+    {
+      "code": 6002,
+      "name": "TournamentAlreadyEnded",
+      "msg": "Tournament is already ended"
+    },
+    {
+      "code": 6003,
+      "name": "TournamentNotEnded",
+      "msg": "Tournament has not ended yet"
+    },
+    {
+      "code": 6004,
+      "name": "ContractPaused",
+      "msg": "Contract is paused — emergency only"
+    },
+    {
+      "code": 6005,
+      "name": "NotPaused",
+      "msg": "Contract is not paused"
+    },
+    {
+      "code": 6006,
+      "name": "NotAdmin",
+      "msg": "Not authorized: admin only"
+    },
+    {
+      "code": 6007,
+      "name": "NotGameServer",
+      "msg": "Not authorized: game server only"
+    },
+    {
+      "code": 6008,
+      "name": "NotMultisigSigner",
+      "msg": "Not a registered multisig signer"
+    },
+    {
+      "code": 6009,
+      "name": "AlreadyVoted",
+      "msg": "Signer already voted for pause"
+    },
+    {
+      "code": 6010,
+      "name": "InsufficientPauseVotes",
+      "msg": "Insufficient pause votes (need 2-of-3)"
+    },
+    {
+      "code": 6011,
+      "name": "PlayerNotInitialized",
+      "msg": "Player account not initialized — call connect_player first"
+    },
+    {
+      "code": 6012,
+      "name": "InvalidTeam",
+      "msg": "Invalid team: must be 0, 1, or 2"
+    },
+    {
+      "code": 6013,
+      "name": "InsufficientAttempts",
+      "msg": "Insufficient attempts balance"
+    },
+    {
+      "code": 6014,
+      "name": "InsufficientBalance",
+      "msg": "Insufficient in-game NVPX balance"
+    },
+    {
+      "code": 6015,
+      "name": "InvalidPackageType",
+      "msg": "Invalid package type"
+    },
+    {
+      "code": 6016,
+      "name": "InvalidItemType",
+      "msg": "Invalid item type"
+    },
+    {
+      "code": 6017,
+      "name": "InsufficientSolForItem",
+      "msg": "Insufficient SOL sent for this item"
+    },
+    {
+      "code": 6018,
+      "name": "InvalidPixelCoords",
+      "msg": "Pixel coordinates out of canvas bounds"
+    },
+    {
+      "code": 6019,
+      "name": "PixelShielded",
+      "msg": "Target pixel is protected by a shield"
+    },
+    {
+      "code": 6020,
+      "name": "NoShieldAtTarget",
+      "msg": "No active shield found at target location"
+    },
+    {
+      "code": 6021,
+      "name": "TooManyShields",
+      "msg": "Player has reached the maximum number of active shields"
+    },
+    {
+      "code": 6022,
+      "name": "ZeroPixelValue",
+      "msg": "Zero pixel value — must be positive"
+    },
+    {
+      "code": 6023,
+      "name": "AirdropAlreadyClaimed",
+      "msg": "Airdrop already claimed"
+    },
+    {
+      "code": 6024,
+      "name": "NoAirdropAllocation",
+      "msg": "No airdrop allocation for this player"
+    },
+    {
+      "code": 6025,
+      "name": "AirdropPoolInsufficient",
+      "msg": "Airdrop pool has insufficient funds"
+    },
+    {
+      "code": 6026,
+      "name": "WalletLocked",
+      "msg": "Wallet is still time-locked"
+    },
+    {
+      "code": 6027,
+      "name": "AlreadyBurned",
+      "msg": "Tokens have already been burned"
+    },
+    {
+      "code": 6028,
+      "name": "AuthorityAlreadyRevoked",
+      "msg": "Mint and freeze authorities have already been permanently revoked"
+    },
+    {
+      "code": 6029,
+      "name": "MathOverflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6030,
+      "name": "MathUnderflow",
+      "msg": "Arithmetic underflow"
+    },
+    {
+      "code": 6031,
+      "name": "DivisionByZero",
+      "msg": "Division by zero"
+    },
+    {
+      "code": 6032,
+      "name": "InvalidSellAmount",
+      "msg": "Invalid sell amount — must be positive"
+    },
+    {
+      "code": 6033,
+      "name": "JupiterSwapFailed",
+      "msg": "Jupiter swap CPI failed"
+    },
+    {
+      "code": 6034,
+      "name": "InvalidJupiterProgram",
+      "msg": "Invalid Jupiter program ID"
+    },
+    {
+      "code": 6035,
+      "name": "SlippageExceeded",
+      "msg": "Slippage tolerance exceeded"
+    },
+    {
+      "code": 6036,
+      "name": "ZeroTokensReceived",
+      "msg": "Jupiter returned zero tokens"
+    }
+  ],
+  "types": [
+    {
+      "name": "AirdropClaimed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BuybackExecuted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "sol_spent",
+            "type": "u64"
+          },
+          {
+            "name": "nvpx_bought",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EmergencyPaused",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "reason",
+            "type": "string"
+          },
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "EmergencyUnpaused",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GlobalState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "game_server",
+            "type": "pubkey"
+          },
+          {
+            "name": "multisig_signers",
+            "type": {
+              "array": [
+                "pubkey",
+                3
+              ]
+            }
+          },
+          {
+            "name": "pause_votes",
+            "type": {
+              "array": [
+                "bool",
+                3
+              ]
+            }
+          },
+          {
+            "name": "tournament_state",
+            "type": {
+              "defined": {
+                "name": "TournamentState"
+              }
+            }
+          },
+          {
+            "name": "tournament_start_time",
+            "type": "i64"
+          },
+          {
+            "name": "tournament_end_time",
+            "type": "i64"
+          },
+          {
+            "name": "initialized_at",
+            "type": "i64"
+          },
+          {
+            "name": "current_round",
+            "type": "u8"
+          },
+          {
+            "name": "airdrop_finalized",
+            "type": "bool"
+          },
+          {
+            "name": "authorities_revoked",
+            "type": "bool"
+          },
+          {
+            "name": "nvpx_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "total_correct_pixels",
+            "type": "u64"
+          },
+          {
+            "name": "total_nvpx_in_game",
+            "type": "u64"
+          },
+          {
+            "name": "total_nvpx_rewarded",
+            "type": "u64"
+          },
+          {
+            "name": "liquidity_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "airdrop_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "team_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "development_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "burn_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "reserve_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "buyback_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InGameSell",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "nvpx_sold",
+            "type": "u64"
+          },
+          {
+            "name": "penalty_amount",
+            "type": "u64"
+          },
+          {
+            "name": "tax_amount",
+            "type": "u64"
+          },
+          {
+            "name": "received_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "game_server",
+            "type": "pubkey"
+          },
+          {
+            "name": "multisig_signers",
+            "type": {
+              "array": [
+                "pubkey",
+                3
+              ]
+            }
+          },
+          {
+            "name": "use_devnet_timelocks",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ItemPurchased",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "item_type",
+            "type": "u8"
+          },
+          {
+            "name": "sol_cost",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MintAuthorityRevoked",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PackagePurchased",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "package_type",
+            "type": "u8"
+          },
+          {
+            "name": "attempts",
+            "type": "u32"
+          },
+          {
+            "name": "sol_paid",
+            "type": "u64"
+          },
+          {
+            "name": "nvpx_bought",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PixelCaptured",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "attacker_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "defender_wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "x",
+            "type": "u16"
+          },
+          {
+            "name": "y",
+            "type": "u16"
+          },
+          {
+            "name": "nvpx_transferred",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PixelColored",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "team",
+            "type": "u8"
+          },
+          {
+            "name": "x",
+            "type": "u16"
+          },
+          {
+            "name": "y",
+            "type": "u16"
+          },
+          {
+            "name": "is_correct",
+            "type": "bool"
+          },
+          {
+            "name": "nvpx_reward",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlayerAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet_address",
+            "type": "pubkey"
+          },
+          {
+            "name": "team",
+            "type": "u8"
+          },
+          {
+            "name": "attempts_balance",
+            "type": "u32"
+          },
+          {
+            "name": "in_game_nvpx_balance",
+            "type": "u64"
+          },
+          {
+            "name": "correct_pixels_colored",
+            "type": "u64"
+          },
+          {
+            "name": "airdrop_allocation",
+            "type": "u64"
+          },
+          {
+            "name": "airdrop_claimed",
+            "type": "bool"
+          },
+          {
+            "name": "join_timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "total_sol_spent",
+            "type": "u64"
+          },
+          {
+            "name": "active_shields",
+            "type": {
+              "array": [
+                {
+                  "defined": {
+                    "name": "Shield"
+                  }
+                },
+                10
+              ]
+            }
+          },
+          {
+            "name": "is_initialized",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlayerConnected",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "team",
+            "type": "u8"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RocketFired",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "target_x",
+            "type": "u16"
+          },
+          {
+            "name": "target_y",
+            "type": "u16"
+          },
+          {
+            "name": "shield_destroyed",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RoundEnded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "round",
+            "type": "u8"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "total_correct_pixels",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Shield",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "center_x",
+            "type": "u16"
+          },
+          {
+            "name": "center_y",
+            "type": "u16"
+          },
+          {
+            "name": "size",
+            "type": "u8"
+          },
+          {
+            "name": "expiry_time",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ShieldActivated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "type": "pubkey"
+          },
+          {
+            "name": "team",
+            "type": "u8"
+          },
+          {
+            "name": "center_x",
+            "type": "u16"
+          },
+          {
+            "name": "center_y",
+            "type": "u16"
+          },
+          {
+            "name": "size",
+            "type": "u8"
+          },
+          {
+            "name": "expiry",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TokensBurned",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TournamentEnded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "total_correct_pixels",
+            "type": "u64"
+          },
+          {
+            "name": "total_nvpx_in_game",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TournamentStarted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "TournamentState",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Inactive"
+          },
+          {
+            "name": "Active"
+          },
+          {
+            "name": "RoundEnded"
+          },
+          {
+            "name": "Ended"
+          },
+          {
+            "name": "Paused"
+          },
+          {
+            "name": "Distribution"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WalletState",
+      "docs": [
+        "State PDA for each locked program wallet.",
+        "The actual tokens live in the ATA owned by this PDA."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet_type",
+            "type": {
+              "defined": {
+                "name": "WalletType"
+              }
+            }
+          },
+          {
+            "name": "nvpx_balance",
+            "type": "u64"
+          },
+          {
+            "name": "initial_allocation",
+            "type": "u64"
+          },
+          {
+            "name": "lock_until",
+            "type": "i64"
+          },
+          {
+            "name": "is_burned",
+            "type": "bool"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WalletType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Liquidity"
+          },
+          {
+            "name": "Airdrop"
+          },
+          {
+            "name": "Team"
+          },
+          {
+            "name": "Development"
+          },
+          {
+            "name": "Burn"
+          },
+          {
+            "name": "Reserve"
+          },
+          {
+            "name": "Buyback"
+          }
+        ]
+      }
+    }
+  ]
+}
